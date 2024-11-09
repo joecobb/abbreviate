@@ -9,6 +9,7 @@ str4 = "Word1-2Drow_Word3"
 str5 = "Word1 _-2Drow"
 str6 = "so write score"
 str7 = "total splash"
+str8 = "De!and & Delivery"
 describe "abbreviate", ->
   it "should return the string on length>string.length", ->
     abbreviate(str1, length: str1.length).should.equal str1
@@ -19,6 +20,8 @@ describe "abbreviate", ->
     abbreviate(str1, length: str1.length-2).should.equal "ts"
   it "should remove lowercase first", ->
     abbreviate(str2, length: str2.length-2).should.equal "TT"
+  it "should remove excluded characters", ->
+    abbreviate(str8, length: 3, exclude: ["&","!"]).should.equal "DnD"
   describe "with words", ->
     it "should remove whitespace first", ->
       abbreviate(str3, length: str3.length-1).should.equal "Word12Drow"

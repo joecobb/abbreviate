@@ -5,12 +5,18 @@ diblends= ["bl","br","cl","cr","fl","fr","gl","gr","pl","pr","sc","sl","sm","sn"
 trigraphs = ["chr","sch"]
 triblends = ["shr","spl","spr","squ","str","thr"]
 
-module.exports = (str,{length, keepSeparators, strict}) ->
+module.exports = (str,{length, keepSeparators, strict, exclude}) ->
   length ?= 3
   keepSeparators ?= false
   strict ?= true
+  exclude ?= []
   return "" if length <=0 and strict
   return str if length >= str.length
+
+  #exclude characters in exclusion list
+  pattern = new RegExp "[#{exclude.join('').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}]", 'g'
+  str = str.replace pattern, ''
+
   #trim
   str = str.replace(/^[\s\-_,]+/, "").replace /[\s\-_,]+$/, ""
   return str if length >= str.length
